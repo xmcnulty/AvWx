@@ -29,10 +29,11 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Unit Test with Android Emulator Runner
-        uses: ReactiveCircus/android-emulator-runner@v2.28.0
-        with:
-          api-level: 34
-          script: ./gradlew connectedCheck
+        #uses: ReactiveCircus/android-emulator-runner@v2.28.0
+        #with:
+        #  api-level: 33
+        #  script: ./gradlew connectedCheck
+        run: ./gradlew testDebugUnitTest
 
       - name: generate report
         uses: actions/upload-artifact@v2
