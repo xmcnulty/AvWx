@@ -1,3 +1,13 @@
+  {
+    "fixes": [
+        - "debugAndroidTest/::app/src/test/java/"
+          #  "/home/runner/work/CodeCoverage_Example/CodeCoverage_Example>/::"
+    ],
+    "codecov": {
+      "disable_default_path_fixes": true
+    }
+  }
+
 name: CI
 
 # Controls when the action will run. 
