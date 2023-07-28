@@ -1,6 +1,7 @@
 package io.mcnulty.avwx.domain.model.metar.fields
 
 import io.mcnulty.avwx.domain.model.metar.MetarBlock
+import io.mcnulty.avwx.domain.model.metar.measurement.AltitudeUnits
 import java.text.NumberFormat
 
 /**
@@ -12,8 +13,9 @@ import java.text.NumberFormat
 data class Clouds(
     val altitude: Int,
     val coverage: Coverage,
-    val type: Type? = null
-) : MetarBlock {
+    val type: Type? = null,
+    override val units: AltitudeUnits = AltitudeUnits.FEET
+) : MetarBlock, Measurable {
 
     init {
         require(altitude >= 100) { "Altitude must be at least" }
@@ -36,7 +38,7 @@ data class Clouds(
             if (coverage == Coverage.VERTICAL_VISIBILITY) {
                 return "Vertical visibility ${
                     NumberFormat.getIntegerInstance().format(altitude)
-                } feet"
+                }${units.abbreviation}"
             }
 
             val cloudType = type?.let {
@@ -45,7 +47,7 @@ data class Clouds(
 
            return "${coverage.description}$cloudType at ${
                 NumberFormat.getIntegerInstance().format(altitude)
-            } feet"
+            }${units.abbreviation}"
         }
 
     /**
