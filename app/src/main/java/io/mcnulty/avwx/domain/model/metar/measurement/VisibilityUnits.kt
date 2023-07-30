@@ -6,7 +6,8 @@ enum class VisibilityUnits(
 ) : MetarUnits {
     METERS("meters", "m"),
     KILOMETERS("kilometers", "km"),
-    STATUTE_MILES("statute miles", "sm");
+    STATUTE_MILES("statute miles", "sm"),
+    FEET("feet", "ft");
 
     override fun fromString(value: String): MetarUnits {
         return values().firstOrNull() { it.abbreviation == value } ?: STATUTE_MILES
