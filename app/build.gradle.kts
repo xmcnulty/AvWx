@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
     kotlin("kapt")
+    alias(libs.plugins.dagger.hilt.android)
     jacoco
 }
 
@@ -95,12 +96,12 @@ fun setupAndroidReporting() {
 
 android {
     namespace = "io.mcnulty.avwx"
-    compileSdk = 34
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "io.mcnulty.avwx"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -152,23 +153,31 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.10.1")
+    implementation(libs.core.ktx)
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    implementation("androidx.activity:activity-compose:1.7.2")
+    implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.activity.compose)
     implementation (platform("androidx.compose:compose-bom:2022.10.00"))
     implementation ("androidx.compose.ui:ui")
     implementation ("androidx.compose.ui:ui-graphics")
     implementation ("androidx.compose.ui:ui-tooling-preview")
     implementation ("androidx.compose.material3:material3")
-    implementation ("org.jacoco:org.jacoco.core:0.8.10")
-    testImplementation ("junit:junit:4.13.2")
-    androidTestImplementation ("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation ("androidx.test.espresso:espresso-core:3.5.1")
+    implementation (libs.org.jacoco.core)
+
+    // DI
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+
+    // Data and Async
+    implementation(libs.retrofit)
+
+    testImplementation (libs.junit)
+    androidTestImplementation (libs.ext.junit)
+    androidTestImplementation (libs.espresso.core)
     androidTestImplementation (platform("androidx.compose:compose-bom:2022.10.00"))
     androidTestImplementation ("androidx.compose.ui:ui-test-junit4")
-    androidTestImplementation ("androidx.test:runner:1.5.2")
-    androidTestImplementation ("androidx.test:rules:1.5.0")
+    androidTestImplementation (libs.runner)
+    androidTestImplementation (libs.rules)
     debugImplementation ("androidx.compose.ui:ui-tooling")
     debugImplementation ("androidx.compose.ui:ui-test-manifest")
 }
