@@ -21,4 +21,16 @@ data class Runway(
             val positionString = position?.description?.addSpacePrefix() ?: ""
             return "Runway $number$positionString"
         }
+
+    companion object {
+        fun build(code: String): Runway {
+            val number = code.substring(0, 2).toInt()
+            val position = when(code.length) {
+                3 -> RunwayPosition.build(code[2].toString())
+                else -> null
+            }
+
+            return Runway(number, position)
+        }
+    }
 }

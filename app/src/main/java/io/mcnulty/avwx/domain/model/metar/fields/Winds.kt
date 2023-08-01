@@ -8,7 +8,7 @@ data class Winds(
     val speed: Int,
     val gust: Int? = null,
     val variation: Variation? = null,
-    override val units: WindSpeedUnits
+    override val units: WindSpeedUnits = WindSpeedUnits.KNOTS
 ) : MetarBlock, Measurable {
 
     override val code: String

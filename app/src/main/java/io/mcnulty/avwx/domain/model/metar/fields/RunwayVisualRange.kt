@@ -6,40 +6,46 @@ import io.mcnulty.avwx.domain.model.metar.measurement.VisibilityUnits
 
 data class RunwayVisualRange(
     val runway: Runway,
-    val maxVisibility: Int,
-    val minVisibility: Int? = null,
-    val marker: Marker? = null,
+    val maxVisibility: RvRVisibility,
+    val minVisibility: RvRVisibility? = null,
     override val units: VisibilityUnits = VisibilityUnits.FEET
 ) : MetarBlock, Measurable {
 
-    init {
-        minVisibility?.let {
-            require(it < maxVisibility) { "Minimum visibility must be less than maximum visibility" }
+    data class RvRVisibility internal constructor(
+        val value: Int,
+        val marker: Marker? = null
+    ) {
+        enum class Marker {
+            LESS_THAN,
+            GREATER_THAN
         }
-    }
 
-    enum class Marker {
-        LESS_THAN,
-        GREATER_THAN
+        override fun toString(): String = when(marker) {
+            Marker.LESS_THAN -> "M$value"
+            Marker.GREATER_THAN -> "P$value"
+            else -> value.toString()
+        }
+
+        companion object {
+            fun build(value: String): RvRVisibility {
+                val marker = when(value[0]) {
+                    'M' -> Marker.LESS_THAN
+                    'P' -> Marker.GREATER_THAN
+                    else -> null
+                }
+
+                val visibility = value.substring(1).toInt()
+
+                return RvRVisibility(visibility, marker)
+            }
+        }
     }
 
     override val code: String
         get() {
             return when(minVisibility) {
-                null -> {
-                    val markerString = marker?.let {
-                        when(it) {
-                            Marker.LESS_THAN -> "M"
-                            Marker.GREATER_THAN -> "P"
-                        }
-                    } ?: ""
-
-                    "${runway.code}/$markerString$maxVisibility${units.abbreviation.uppercase()}"
-                }
-
-                else -> {
-                    "${runway.code}/${minVisibility}V$maxVisibility${units.abbreviation.uppercase()}"
-                }
+                null -> "${runway.code}/$maxVisibility${units.abbreviation.uppercase()}"
+                else -> "${runway.code}/${minVisibility}V$maxVisibility${units.abbreviation}"
             }
         }
 
@@ -48,19 +54,9 @@ data class RunwayVisualRange(
             val prefix = "Runway ${runway.code} visual range: "
 
             return prefix + when(minVisibility) {
-                null -> {
-                    val markerString = marker?.let {
-                        when(it) {
-                            Marker.LESS_THAN -> "less than"
-                            Marker.GREATER_THAN -> "greater than"
-                        }
-                    } ?: ""
-
-                    "$markerString $maxVisibility ${units.description}"
-                }
-
+                null -> "$maxVisibility ${units.description}"
                 else -> {
-                    "between $minVisibility and $maxVisibility ${units.description}"
+                    "varying between $minVisibility and $maxVisibility ${units.description}"
                 }
             }
         }

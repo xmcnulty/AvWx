@@ -7,9 +7,12 @@ enum class AltitudeUnits(
     FEET("feet", "ft"),
     METERS("meters", "m");
 
-    override fun fromString(value: String): MetarUnits {
 
-        // returns the associated value, or feet by default
-        return values().firstOrNull { it.abbreviation == value } ?: FEET
+    companion object {
+        fun fromString(value: String): MetarUnits {
+
+            // returns the associated value, or feet by default
+            return values().firstOrNull { it.abbreviation == value } ?: FEET
+        }
     }
 }
