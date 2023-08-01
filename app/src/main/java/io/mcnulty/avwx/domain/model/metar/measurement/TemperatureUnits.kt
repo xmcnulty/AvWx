@@ -7,7 +7,9 @@ enum class TemperatureUnits(
     CELSIUS("Celsius", "C"),
     FAHRENHEIT("Fahrenheit", "F");
 
-    override fun fromString(value: String): MetarUnits {
-        return values().firstOrNull() { it.abbreviation == value } ?: CELSIUS
+    companion object {
+        fun fromString(value: String): MetarUnits {
+            return values().firstOrNull() { it.abbreviation == value } ?: CELSIUS
+        }
     }
 }

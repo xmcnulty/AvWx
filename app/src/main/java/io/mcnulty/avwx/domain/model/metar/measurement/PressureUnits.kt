@@ -7,9 +7,11 @@ enum class PressureUnits(
     INCHES_OF_MERCURY("inches of mercury", "inHg"),
     HECTOPASCALS("hectopascals", "hPa");
 
-    override fun fromString(value: String): MetarUnits {
+    companion object {
+        fun fromString(value: String): MetarUnits {
 
-        // returns the associated value, or inches of mercury by default
-        return values().firstOrNull { it.abbreviation == value } ?: INCHES_OF_MERCURY
+            // returns the associated value, or inches of mercury by default
+            return values().firstOrNull { it.abbreviation == value } ?: INCHES_OF_MERCURY
+        }
     }
 }

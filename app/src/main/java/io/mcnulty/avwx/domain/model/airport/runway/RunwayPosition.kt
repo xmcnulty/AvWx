@@ -6,5 +6,11 @@ enum class RunwayPosition(
 ) {
     LEFT("L", "Left"),
     RIGHT("R", "Right"),
-    CENTER("C", "Center")
+    CENTER("C", "Center");
+
+    companion object {
+        fun build(code: String): RunwayPosition {
+            return values().first { it.code == code }
+        }
+    }
 }

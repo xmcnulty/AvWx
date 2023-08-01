@@ -4,7 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 data class MetarDto(
     val altimeter: Altimeter,
-    val clouds: List<Cloud>,
+    @SerializedName("clouds")
+    val cloudDtos: List<CloudDto>,
     @SerializedName("density_altitude")
     val densityAltitude: Int,
     val dewpoint: Dewpoint,
@@ -22,7 +23,7 @@ data class MetarDto(
     @SerializedName("remarks_info")
     val remarksInfo: RemarksInfo,
     @SerializedName("runway_visibility")
-    val runwayVisibility: List<Any>,
+    val runwayVisibility: List<RunwayVisibilityDto>,
     val sanitized: String,
     val station: String,
     val temperature: Temperature,
@@ -32,23 +33,23 @@ data class MetarDto(
     @SerializedName("wind_direction")
     val windDirection: WindDirection,
     @SerializedName("wind_gust")
-    val windGust: Any,
+    val windGust: WindGust?,
     @SerializedName("wind_speed")
     val windSpeed: WindSpeed,
     @SerializedName("wind_variable_direction")
-    val windVariableDirection: List<Any>,
+    val windVariableDirection: List<WindVariableDirection>,
     @SerializedName("wx_codes")
     val weatherCodes: List<Any>
 ) {
     data class Altimeter(
         val repr: String,
         val spoken: String,
-        val value: Double
+        val value: Number
     )
 
-    data class Cloud(
+    data class CloudDto(
         val altitude: Int,
-        val modifier: Any,
+        val modifier: String,
         val repr: String,
         val type: String
     )
@@ -126,6 +127,21 @@ data class MetarDto(
         )
     }
 
+    data class RunwayVisibilityDto(
+        val repr: String,
+        val runway: String,
+        val visibility: RunwayVisibility?,
+        @SerializedName("variable_visibility")
+        val variableVisibility: List<RunwayVisibility>,
+        val trend: Any
+    ) {
+        data class RunwayVisibility(
+            val repr: String,
+            val spoken: String,
+            val value: Int
+        )
+    }
+
     data class Temperature(
         val repr: String,
         val spoken: String,
@@ -143,7 +159,8 @@ data class MetarDto(
         val altitude: String,
         val temperature: String,
         val visibility: String,
-        val wind_speed: String
+        @SerializedName("wind_speed")
+        val windSpeed: String
     )
 
     data class Visibility(
@@ -158,7 +175,19 @@ data class MetarDto(
         val value: Int
     )
 
+    data class WindGust(
+        val repr: String,
+        val spoken: String,
+        val value: Int
+    )
+
     data class WindSpeed(
+        val repr: String,
+        val spoken: String,
+        val value: Int
+    )
+
+    data class WindVariableDirection(
         val repr: String,
         val spoken: String,
         val value: Int

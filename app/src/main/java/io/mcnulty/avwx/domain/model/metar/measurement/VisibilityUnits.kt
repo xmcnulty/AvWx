@@ -9,7 +9,9 @@ enum class VisibilityUnits(
     STATUTE_MILES("statute miles", "sm"),
     FEET("feet", "ft");
 
-    override fun fromString(value: String): MetarUnits {
-        return values().firstOrNull() { it.abbreviation == value } ?: STATUTE_MILES
+    companion object {
+        fun fromString(value: String): MetarUnits {
+            return values().firstOrNull() { it.abbreviation == value } ?: STATUTE_MILES
+        }
     }
 }
