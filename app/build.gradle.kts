@@ -170,6 +170,11 @@ dependencies {
 
     // Data and Async
     implementation(libs.retrofit)
+    implementation(libs.gson)
+    implementation(libs.gson.converter)
+    implementation(platform(libs.okhttp.bom))
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
 
     testImplementation (libs.junit)
     androidTestImplementation (libs.ext.junit)
