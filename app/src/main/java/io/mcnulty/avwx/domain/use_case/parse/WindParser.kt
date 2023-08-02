@@ -1,6 +1,7 @@
 package io.mcnulty.avwx.domain.use_case.parse
 
-import io.mcnulty.avwx.data.remote.dto.MetarDto
+import io.mcnulty.avwx.data.remote.dto.metar.MetarDto
+import io.mcnulty.avwx.data.remote.dto.metar.WindVariableDirection
 import io.mcnulty.avwx.domain.model.metar.fields.Winds
 import io.mcnulty.avwx.domain.model.metar.measurement.WindSpeedUnits
 
@@ -14,7 +15,7 @@ internal object WindParser {
      * @param direction The wind direction
      * @param speed The wind speed
      * @param gust The wind gust
-     * @param variableDirections The variable [MetarDto.WindVariableDirection] contained in the [MetarDto]
+     * @param variableDirections The variable [WindVariableDirection] contained in the [MetarDto]
      * @param units The [WindSpeedUnits] to use
      * @return The parsed [Winds]
      */
@@ -22,7 +23,7 @@ internal object WindParser {
         direction: Int,
         speed: Int,
         gust: Int?,
-        variableDirections: List<MetarDto.WindVariableDirection>,
+        variableDirections: List<WindVariableDirection>,
         units: WindSpeedUnits
     ): Winds {
         val variation = if(variableDirections.size == 2) {

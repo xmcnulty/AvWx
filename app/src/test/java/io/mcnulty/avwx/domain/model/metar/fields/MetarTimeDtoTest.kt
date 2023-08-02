@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.TimeZone
 
-class MetarTimeTest {
+class MetarTimeDtoTest {
 
     private lateinit var monthYear: String
 

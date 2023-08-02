@@ -1,6 +1,6 @@
 package io.mcnulty.avwx.data.remote
 
-import io.mcnulty.avwx.data.remote.dto.MetarDto
+import io.mcnulty.avwx.data.remote.dto.metar.MetarDto
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
