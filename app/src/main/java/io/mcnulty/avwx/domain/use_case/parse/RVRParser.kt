@@ -1,6 +1,7 @@
 package io.mcnulty.avwx.domain.use_case.parse
 
-import io.mcnulty.avwx.data.remote.dto.MetarDto
+import io.mcnulty.avwx.data.remote.dto.metar.MetarDto
+import io.mcnulty.avwx.data.remote.dto.metar.RunwayVisibilityDto
 import io.mcnulty.avwx.domain.model.airport.runway.Runway
 import io.mcnulty.avwx.domain.model.metar.fields.RunwayVisualRange
 import io.mcnulty.avwx.domain.model.metar.measurement.VisibilityUnits
@@ -13,12 +14,12 @@ internal object RVRParser {
     /**
      * Parses runway visual range from a [MetarDto] to a [RunwayVisualRange] domain object.
      *
-     * @param rvrDto The [MetarDto.RunwayVisibilityDto] to parse
+     * @param rvrDto The [RunwayVisibilityDto] to parse
      * @param units The [VisibilityUnits] to use
      * @return The parsed [RunwayVisualRange]
      */
     fun parse(
-        rvrDto: List<MetarDto.RunwayVisibilityDto>,
+        rvrDto: List<RunwayVisibilityDto>,
         units: VisibilityUnits
     ): List<RunwayVisualRange> = rvrDto.map { dto ->
         val runway = Runway.build(dto.runway)

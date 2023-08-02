@@ -1,6 +1,7 @@
 package io.mcnulty.avwx.domain.use_case.parse
 
-import io.mcnulty.avwx.data.remote.dto.MetarDto
+import io.mcnulty.avwx.data.remote.dto.metar.MetarDto
+import io.mcnulty.avwx.data.remote.dto.metar.UnitsDto
 import io.mcnulty.avwx.domain.model.metar.Metar
 import io.mcnulty.avwx.domain.model.metar.fields.FlightRules
 import io.mcnulty.avwx.domain.model.metar.fields.Visibility
@@ -31,11 +32,11 @@ object MetarParser {
      * @return The converted [Metar]
      */
     fun toMetar(dto: MetarDto): Metar {
-        val unitsMap: Map<String, MetarUnits> = parseUnits(dto.units)
+        val unitsMap: Map<String, MetarUnits> = parseUnits(dto.unitsDto)
 
         return Metar(
             raw = dto.raw,
-            time = MetarTimeParser.parse(dto.time.repr),
+            time = MetarTimeParser.parse(dto.timeDto.repr),
             stationIdentifier = dto.station,
             wind = WindParser.parse(
                 direction = dto.windDirection.value,
@@ -45,17 +46,17 @@ object MetarParser {
                 units = unitsMap["windSpeed"] as WindSpeedUnits
             ),
             visibility = Visibility(
-                code = dto.visibility.repr,
-                value = dto.visibility.value.toDouble(),
+                code = dto.visibilityDto.repr,
+                value = dto.visibilityDto.value.toDouble(),
                 units = unitsMap["visibility"] as VisibilityUnits
             ),
             runwayVisualRange = RVRParser.parse(
                 dto.runwayVisibility,
                 unitsMap["altitude"] as VisibilityUnits
             ),
-            altimeter = AltimeterParser.parse(dto.altimeter, unitsMap["pressure"] as PressureUnits),
+            altimeter = AltimeterParser.parse(dto.altimeterDto, unitsMap["pressure"] as PressureUnits),
             clouds = CloudParser.parse(dto.cloudDtos),
-            dewPoint = dto.dewpoint.value,
+            dewPoint = dto.dewpointDto.value,
             temperature = TemperatureParser.parse(
                 dto,
                 unitsMap[TEMPERATURE_KEY] as TemperatureUnits
@@ -63,7 +64,7 @@ object MetarParser {
             remarks = dto.remarks,
             flightRules = FlightRules.fromString(dto.flightRules),
             relativeHumidity = dto.relativeHumidity,
-            weather = dto.weatherCodes.map { wxCode ->
+            weather = dto.weatherCodeDtos.map { wxCode ->
                 Weather(code = wxCode.repr, description = wxCode.value)
             }
         )
@@ -73,16 +74,16 @@ object MetarParser {
      * Parses the units from a [MetarDto] to a [Map] of [String] to [MetarUnits] to be used
      * throughout the conversion process.
      *
-     * @param units The [MetarDto.Units] to parse
+     * @param unitsDto The [UnitsDto] to parse
      * @return The parsed [Map] of [String] to [MetarUnits]
      */
-    private fun parseUnits(units: MetarDto.Units): Map<String, MetarUnits> {
+    private fun parseUnits(unitsDto: UnitsDto): Map<String, MetarUnits> {
         return mapOf(
-            ALTITUDE_KEY to AltitudeUnits.fromString(units.altitude),
-            TEMPERATURE_KEY to TemperatureUnits.fromString(units.temperature),
-            PRESSURE_KEY to PressureUnits.fromString(units.altimeter),
-            VISIBILITY_KEY to VisibilityUnits.fromString(units.visibility),
-            WIND_SPEED_KEY to WindSpeedUnits.fromString(units.windSpeed)
+            ALTITUDE_KEY to AltitudeUnits.fromString(unitsDto.altitude),
+            TEMPERATURE_KEY to TemperatureUnits.fromString(unitsDto.temperature),
+            PRESSURE_KEY to PressureUnits.fromString(unitsDto.altimeter),
+            VISIBILITY_KEY to VisibilityUnits.fromString(unitsDto.visibility),
+            WIND_SPEED_KEY to WindSpeedUnits.fromString(unitsDto.windSpeed)
         )
     }
 }
