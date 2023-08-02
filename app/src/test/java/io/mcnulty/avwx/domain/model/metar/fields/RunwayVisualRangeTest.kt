@@ -17,7 +17,7 @@ class RunwayVisualRangeTest {
             units = VisibilityUnits.METERS
         )
 
-        assertEquals("09/1500m", rvr.code)
+        assertEquals("R09/1500m", rvr.code)
     }
 
     @Test
@@ -33,7 +33,7 @@ class RunwayVisualRangeTest {
             minVisibility
         )
 
-        assertEquals("27/200V600ft", rvr.code)
+        assertEquals("R27/200V600ft", rvr.code)
     }
 
     @Test
@@ -43,7 +43,7 @@ class RunwayVisualRangeTest {
 
         val rvr = RunwayVisualRange(runway, maxVisibility, units = VisibilityUnits.METERS)
 
-        assertEquals("Runway 18R visual range: greater than 1800 meters", rvr.description)
+        assertEquals("Runway 18R visual range: greater than 1800m", rvr.description)
     }
 
     @Test
@@ -55,7 +55,7 @@ class RunwayVisualRangeTest {
             RunwayVisualRange.RvRVisibility.build("300")
         )
 
-        assertEquals("Runway 36L visual range: varying between 300 and 700 feet", rvr.description)
+        assertEquals("Runway 36L visual range: varying between 300 and 700ft", rvr.description)
     }
 
     @Test
@@ -67,7 +67,7 @@ class RunwayVisualRangeTest {
             RunwayVisualRange.RvRVisibility.build("300")
         )
 
-        assertEquals("Runway 36L visual range: varying between 300 and less than 700 feet", rvr.description)
-        assertEquals("36L/300VM700ft", rvr.code)
+        assertEquals("Runway 36L visual range: varying between 300 and less than 700ft", rvr.description)
+        assertEquals("R36L/300VM700ft", rvr.code)
     }
 }

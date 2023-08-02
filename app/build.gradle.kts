@@ -177,8 +177,10 @@ dependencies {
     implementation(libs.okhttp.logging.interceptor)
 
     testImplementation (libs.junit)
+    testImplementation (libs.truth)
     androidTestImplementation (libs.ext.junit)
     androidTestImplementation (libs.espresso.core)
+    androidTestImplementation(libs.truth)
     androidTestImplementation (platform("androidx.compose:compose-bom:2022.10.00"))
     androidTestImplementation ("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation (libs.runner)
