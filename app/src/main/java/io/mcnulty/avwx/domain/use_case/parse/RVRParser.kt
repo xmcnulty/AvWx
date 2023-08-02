@@ -27,15 +27,20 @@ internal object RVRParser {
         if(dto.variableVisibility.isNotEmpty()) {
             val visibilities = dto.variableVisibility.map { visRange ->
                 RunwayVisualRange.RvRVisibility.build(visRange.repr)
-            }
+            }.sortedBy { vis -> vis.value }
 
-            RunwayVisualRange(runway, visibilities[0], visibilities[1], units)
+            RunwayVisualRange(
+                runway,
+                minVisibility = visibilities[0],
+                maxVisibility = visibilities[1],
+                units = units
+            )
+        } else {
+            RunwayVisualRange(
+                runway,
+                RunwayVisualRange.RvRVisibility.build(dto.visibility!!.repr),
+                units = units
+            )
         }
-
-        RunwayVisualRange(
-            runway,
-            RunwayVisualRange.RvRVisibility.build(dto.visibility!!.repr),
-            units = units
-        )
     }
 }

@@ -61,8 +61,8 @@ data class RunwayVisualRange(
     override val code: String
         get() {
             return when(minVisibility) {
-                null -> "${runway.code}/${maxVisibility.code}${units.abbreviation}"
-                else -> "${runway.code}/${minVisibility.code}V${maxVisibility.code}${units.abbreviation}"
+                null -> "R${runway.code}/${maxVisibility.code}${units.abbreviation}"
+                else -> "R${runway.code}/${minVisibility.code}V${maxVisibility.code}${units.abbreviation}"
             }
         }
 
@@ -71,9 +71,9 @@ data class RunwayVisualRange(
             val prefix = "Runway ${runway.code} visual range: "
 
             return prefix + when(minVisibility) {
-                null -> "$maxVisibility ${units.description}"
+                null -> "$maxVisibility${units.abbreviation}"
                 else -> {
-                    "varying between $minVisibility and $maxVisibility ${units.description}"
+                    "varying between $minVisibility and $maxVisibility${units.abbreviation}"
                 }
             }
         }
