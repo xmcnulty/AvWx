@@ -39,8 +39,13 @@ data class MetarDto(
     @SerializedName("wind_variable_direction")
     val windVariableDirection: List<WindVariableDirection>,
     @SerializedName("wx_codes")
-    val weatherCodes: List<Any>
+    val weatherCodes: List<WeatherCode>
 ) {
+    data class WeatherCode(
+        val repr: String,
+        val value: String
+    )
+
     data class Altimeter(
         val repr: String,
         val spoken: String,
@@ -95,7 +100,7 @@ data class MetarDto(
         @SerializedName("sunshine_minutes")
         val sunshineMinutes: Any,
         @SerializedName("temperature_decimal")
-        val temperatureDecimal: TemperatureDecimal
+        val temperatureDecimal: TemperatureDecimal?
     ) {
         data class Code(
             val repr: String,

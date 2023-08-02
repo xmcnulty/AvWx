@@ -13,20 +13,19 @@ class RunwayVisualRangeTest {
         val runway = Runway(9)
         val rvr = RunwayVisualRange(
             runway,
-            maxVisibility = 1500,
-            marker = RunwayVisualRange.Marker.LESS_THAN,
+            maxVisibility = RunwayVisualRange.RvRVisibility.build("1500"),
             units = VisibilityUnits.METERS
         )
 
-        assertEquals("09/M1500M", rvr.code)
+        assertEquals("09/1500m", rvr.code)
     }
 
     @Test
     fun testCodeWithMinVisibility() {
         val runway = Runway(number=27)
 
-        val maxVisibility = 600
-        val minVisibility = 200
+        val maxVisibility = RunwayVisualRange.RvRVisibility.build("600")
+        val minVisibility = RunwayVisualRange.RvRVisibility.build("200")
 
         val rvr = RunwayVisualRange(
             runway,
@@ -34,16 +33,15 @@ class RunwayVisualRangeTest {
             minVisibility
         )
 
-        assertEquals("27/200V600FT", rvr.code)
+        assertEquals("27/200V600ft", rvr.code)
     }
 
     @Test
     fun testDescriptionWithoutMinVisibility() {
         val runway = Runway(18, RunwayPosition.RIGHT)
-        val maxVisibility = 1800
-        val marker = RunwayVisualRange.Marker.GREATER_THAN
+        val maxVisibility = RunwayVisualRange.RvRVisibility.build("P1800")
 
-        val rvr = RunwayVisualRange(runway, maxVisibility, marker = marker, units = VisibilityUnits.METERS)
+        val rvr = RunwayVisualRange(runway, maxVisibility, units = VisibilityUnits.METERS)
 
         assertEquals("Runway 18R visual range: greater than 1800 meters", rvr.description)
     }
@@ -52,21 +50,24 @@ class RunwayVisualRangeTest {
     fun testDescriptionWithMinVisibility() {
         val runway = Runway(36, RunwayPosition.LEFT)
 
-        val maxVisibility = 700
-        val minVisibility = 300
+        val rvr = RunwayVisualRange(runway,
+            RunwayVisualRange.RvRVisibility.build("700"),
+            RunwayVisualRange.RvRVisibility.build("300")
+        )
 
-        val rvr = RunwayVisualRange(runway, maxVisibility, minVisibility)
-
-        assertEquals("Runway 36L visual range: between 300 and 700 feet", rvr.description)
+        assertEquals("Runway 36L visual range: varying between 300 and 700 feet", rvr.description)
     }
 
-    @Test(expected = IllegalArgumentException::class)
-    fun testInvalidMinVisibility() {
-        val runway = Runway(9, RunwayPosition.CENTER)
-        val maxVisibility = 800
-        val minVisibility = 1000
+    @Test
+    fun `test range with below maximum`() {
+        val runway = Runway(36, RunwayPosition.LEFT)
 
-        // Should throw IllegalArgumentException as minVisibility must be less than maxVisibility
-        RunwayVisualRange(runway, maxVisibility, minVisibility)
+        val rvr = RunwayVisualRange(runway,
+            RunwayVisualRange.RvRVisibility.build("M700"),
+            RunwayVisualRange.RvRVisibility.build("300")
+        )
+
+        assertEquals("Runway 36L visual range: varying between 300 and less than 700 feet", rvr.description)
+        assertEquals("36L/300VM700ft", rvr.code)
     }
 }
