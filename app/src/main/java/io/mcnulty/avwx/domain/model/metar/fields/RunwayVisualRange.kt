@@ -21,20 +21,37 @@ data class RunwayVisualRange(
         }
 
         override fun toString(): String = when(marker) {
-            Marker.LESS_THAN -> "M$value"
-            Marker.GREATER_THAN -> "P$value"
+            Marker.LESS_THAN -> "less than $value"
+            Marker.GREATER_THAN -> "greater than $value"
             else -> value.toString()
         }
 
+        val code: String
+            get() {
+                return when(marker) {
+                    Marker.LESS_THAN -> "M$value"
+                    Marker.GREATER_THAN -> "P$value"
+                    else -> value.toString()
+                }
+            }
+
         companion object {
             fun build(value: String): RvRVisibility {
+                val visibility: Int
                 val marker = when(value[0]) {
-                    'M' -> Marker.LESS_THAN
-                    'P' -> Marker.GREATER_THAN
-                    else -> null
+                    'M' -> {
+                        visibility = value.substring(1).toInt()
+                        Marker.LESS_THAN
+                    }
+                    'P' -> {
+                        visibility = value.substring(1).toInt()
+                        Marker.GREATER_THAN
+                    }
+                    else -> {
+                        visibility = value.toInt()
+                        null
+                    }
                 }
-
-                val visibility = value.substring(1).toInt()
 
                 return RvRVisibility(visibility, marker)
             }
@@ -44,8 +61,8 @@ data class RunwayVisualRange(
     override val code: String
         get() {
             return when(minVisibility) {
-                null -> "${runway.code}/$maxVisibility${units.abbreviation.uppercase()}"
-                else -> "${runway.code}/${minVisibility}V$maxVisibility${units.abbreviation}"
+                null -> "${runway.code}/${maxVisibility.code}${units.abbreviation}"
+                else -> "${runway.code}/${minVisibility.code}V${maxVisibility.code}${units.abbreviation}"
             }
         }
 

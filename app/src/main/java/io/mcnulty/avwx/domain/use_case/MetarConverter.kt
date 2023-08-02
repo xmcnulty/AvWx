@@ -10,6 +10,7 @@ import io.mcnulty.avwx.domain.model.metar.fields.MetarTime
 import io.mcnulty.avwx.domain.model.metar.fields.RunwayVisualRange
 import io.mcnulty.avwx.domain.model.metar.fields.Temperature
 import io.mcnulty.avwx.domain.model.metar.fields.Visibility
+import io.mcnulty.avwx.domain.model.metar.fields.Weather
 import io.mcnulty.avwx.domain.model.metar.fields.Winds
 import io.mcnulty.avwx.domain.model.metar.measurement.AltitudeUnits
 import io.mcnulty.avwx.domain.model.metar.measurement.MetarUnits
@@ -18,7 +19,24 @@ import io.mcnulty.avwx.domain.model.metar.measurement.TemperatureUnits
 import io.mcnulty.avwx.domain.model.metar.measurement.VisibilityUnits
 import io.mcnulty.avwx.domain.model.metar.measurement.WindSpeedUnits
 
+internal const val ALTITUDE_KEY = "altitude"
+internal const val PRESSURE_KEY = "pressure"
+internal const val TEMPERATURE_KEY = "temperature"
+internal const val VISIBILITY_KEY = "visibility"
+internal const val WIND_SPEED_KEY = "windSpeed"
+
+/**
+ * Converts a [MetarDto] to a [Metar] domain object.
+ *
+ */
 object MetarConverter {
+    /**
+     * Converts a [MetarDto] to a [Metar] domain object. This is the main entry point for the
+     * converter.
+     *
+     * @param dto The [MetarDto] to convert
+     * @return The converted [Metar]
+     */
     fun toMetar(dto: MetarDto): Metar {
         val units: Map<String, MetarUnits> = parseUnits(dto.units)
 
@@ -43,17 +61,28 @@ object MetarConverter {
                 units["altitude"] as VisibilityUnits
             ),
             altimeter = parseAltimeter(dto.altimeter, units["pressure"] as PressureUnits),
-            clouds = emptyList(), // TODO: parse clouds
+            clouds = fromClouds(dto.cloudDtos),
             dewPoint = dto.dewpoint.value,
-            temperature = Temperature(10.0), // TODO: parse temperature
+            temperature = parseTemperature(dto, units[TEMPERATURE_KEY] as TemperatureUnits),
             remarks = dto.remarks,
-            flightRules = FlightRules.VFR, // TODO: parse flight rules
+            flightRules = FlightRules.fromString(dto.flightRules),
             relativeHumidity = dto.relativeHumidity,
-            weather = emptyList() // TODO: parse weather
+            weather = dto.weatherCodes.map { wxCode ->
+                Weather(code = wxCode.repr, description = wxCode.value)
+            }
         )
     }
 
-    fun parseAltimeter(
+    private fun parseTemperature(
+        dto: MetarDto,
+        units: TemperatureUnits
+    ): Temperature {
+        return dto.remarksInfo.temperatureDecimal?.let { tempDecimal ->
+            Temperature(tempDecimal.value, units)
+        } ?: Temperature(dto.temperature.value.toDouble(), units)
+    }
+
+    private fun parseAltimeter(
         altimeterDto: MetarDto.Altimeter,
         units: PressureUnits
     ): AtmosphericPressure = when(units) {
@@ -61,7 +90,7 @@ object MetarConverter {
         PressureUnits.HECTOPASCALS -> AtmosphericPressure.Qnh(altimeterDto.value.toInt())
     }
 
-    private fun toClouds(cloudDtos: List<MetarDto.CloudDto>): List<Clouds> {
+    private fun fromClouds(cloudDtos: List<MetarDto.CloudDto>): List<Clouds> {
         return cloudDtos.map { cloudDto ->
             Clouds(
                 coverage = Clouds.Coverage.fromCode(cloudDto.type),
@@ -103,11 +132,11 @@ object MetarConverter {
 
     private fun parseUnits(units: MetarDto.Units): Map<String, MetarUnits> {
         return mapOf(
-            "altitude" to AltitudeUnits.fromString(units.altitude),
-            "temperature" to TemperatureUnits.fromString(units.temperature),
-            "pressure" to PressureUnits.fromString(units.altimeter),
-            "visibility" to VisibilityUnits.fromString(units.visibility),
-            "wind_speed" to WindSpeedUnits.fromString(units.windSpeed)
+            ALTITUDE_KEY to AltitudeUnits.fromString(units.altitude),
+            TEMPERATURE_KEY to TemperatureUnits.fromString(units.temperature),
+            PRESSURE_KEY to PressureUnits.fromString(units.altimeter),
+            VISIBILITY_KEY to VisibilityUnits.fromString(units.visibility),
+            WIND_SPEED_KEY to WindSpeedUnits.fromString(units.windSpeed)
         )
     }
 
