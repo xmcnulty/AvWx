@@ -1,6 +1,7 @@
 package io.mcnulty.avwx.domain.use_case.parse
 
 import com.google.common.truth.Truth.assertThat
+import com.google.gson.Gson
 import io.mcnulty.avwx.data.remote.dto.metar.RunwayVisibilityDto
 import io.mcnulty.avwx.domain.model.metar.measurement.VisibilityUnits
 import org.junit.Test
@@ -176,5 +177,140 @@ class RVRParserTest {
         assertThat(rvr[1].description).isEqualTo(
             "Runway 08R visual range: greater than 4000ft"
         )
+    }
+
+    // create RunwayVisibilityDto from json using gson
+    @Test
+    fun `fun test parsing dto created from json string`() {
+        val json = """
+            [
+                {
+                  "repr": "R04R/6000VP6000FT",
+                  "runway": "04R",
+                  "visibility": {},
+                  "variable_visibility": [
+                    {
+                      "repr": "6000",
+                      "value": 6000,
+                      "spoken": "six thousand"
+                    },
+                    {
+                      "repr": "P6000",
+                      "value": {},
+                      "spoken": "greater than six thousand"
+                    }
+                  ],
+                  "trend": {}
+                }
+          ]
+        """.trimIndent()
+
+        val rvrDto = Gson().fromJson(json, Array<RunwayVisibilityDto>::class.java).toList()
+
+        val rvr = RVRParser.parse(rvrDto, VisibilityUnits.FEET)
+
+        assertThat(rvr).hasSize(1)
+        assertThat(rvr[0].code).isEqualTo("R04R/6000VP6000ft")
+    }
+
+    @Test
+    fun `test parsing from empty json array returns empty list`() {
+        val json = "[]"
+
+        val rvrDto = Gson().fromJson(json, Array<RunwayVisibilityDto>::class.java).toList()
+
+        val rvr = RVRParser.parse(rvrDto, VisibilityUnits.FEET)
+
+        assertThat(rvr).isEmpty()
+    }
+
+    @Test
+    fun `test parse json array with multiple visibilities`() {
+        val json = """
+            [
+                {
+                  "repr": "R04R/6000VP6000FT",
+                  "runway": "04R",
+                  "visibility": {},
+                  "variable_visibility": [
+                    {
+                      "repr": "6000",
+                      "value": 6000,
+                      "spoken": "six thousand"
+                    },
+                    {
+                      "repr": "P6000",
+                      "value": {},
+                      "spoken": "greater than six thousand"
+                    }
+                  ],
+                  "trend": {}
+                },
+                {
+                  "repr": "R09L/4000VM5000ft",
+                  "runway": "09L",
+                  "visibility": {},
+                  "variable_visibility": [
+                    {
+                      "repr": "4000",
+                      "value": 4000,
+                      "spoken": "four thousand"
+                    },
+                    {
+                      "repr": "M5000",
+                      "value": {},
+                      "spoken": "less than five thousand"
+                    }
+                  ],
+                  "trend": {}
+                }
+          ]
+        """.trimIndent()
+
+        val rvrDto = Gson().fromJson(json, Array<RunwayVisibilityDto>::class.java).toList()
+
+        val rvr = RVRParser.parse(rvrDto, VisibilityUnits.FEET)
+
+        assertThat(rvr).hasSize(2)
+
+        // validate first rvr
+        assertThat(rvr[0].code).isEqualTo("R04R/6000VP6000ft")
+        assertThat(rvr[0].description).isEqualTo(
+            "Runway 04R visual range: varying between 6000 and greater than 6000ft"
+        )
+
+        // validate second rvr
+        assertThat(rvr[1].code).isEqualTo("R09L/4000VM5000ft")
+        assertThat(rvr[1].description).isEqualTo(
+            "Runway 09L visual range: varying between 4000 and less than 5000ft"
+        )
+    }
+
+    @Test
+    fun `test parse json with visibility and no variable visibility`() {
+        val json = """
+            [
+                {
+                  "repr": "R04R/6000FT",
+                  "runway": "04R",
+                  "visibility": {
+                    "repr": "6000",
+                    "value": 6000,
+                    "spoken": "six thousand"
+                  },
+                  "variable_visibility": [],
+                  "trend": {}
+                }
+          ]
+        """.trimIndent()
+
+        val rvrDto = Gson().fromJson(json, Array<RunwayVisibilityDto>::class.java).toList()
+
+        val rvr = RVRParser.parse(rvrDto, VisibilityUnits.FEET)
+
+        assertThat(rvr).hasSize(1)
+
+        // validate first rvr
+        assertThat(rvr[0].code).isEqualTo("R04R/6000ft")
     }
 }
