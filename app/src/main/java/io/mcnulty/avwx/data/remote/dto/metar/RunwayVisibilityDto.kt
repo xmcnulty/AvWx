@@ -13,6 +13,6 @@ data class RunwayVisibilityDto(
     data class RunwayVisibility(
         val repr: String,
         val spoken: String,
-        val value: Int
+        val value: Any? // API returns an Int or empty json object
     )
 }
