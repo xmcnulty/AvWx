@@ -2,7 +2,7 @@ package io.mcnulty.avwx.domain.model.metar.fields
 
 import io.mcnulty.avwx.domain.model.airport.runway.Runway
 import io.mcnulty.avwx.domain.model.airport.runway.RunwayPosition
-import io.mcnulty.avwx.domain.model.metar.measurement.VisibilityUnits
+import io.mcnulty.avwx.domain.model.metar.measurement.AltitudeUnits
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -14,7 +14,7 @@ class RunwayVisualRangeTest {
         val rvr = RunwayVisualRange(
             runway,
             maxVisibility = RunwayVisualRange.RvRVisibility.build("1500"),
-            units = VisibilityUnits.METERS
+            units = AltitudeUnits.METERS
         )
 
         assertEquals("R09/1500m", rvr.code)
@@ -41,7 +41,7 @@ class RunwayVisualRangeTest {
         val runway = Runway(18, RunwayPosition.RIGHT)
         val maxVisibility = RunwayVisualRange.RvRVisibility.build("P1800")
 
-        val rvr = RunwayVisualRange(runway, maxVisibility, units = VisibilityUnits.METERS)
+        val rvr = RunwayVisualRange(runway, maxVisibility, units = AltitudeUnits.METERS)
 
         assertEquals("Runway 18R visual range: greater than 1800m", rvr.description)
     }

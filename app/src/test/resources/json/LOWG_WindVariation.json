@@ -1,0 +1,82 @@
+{
+  "meta": {
+    "timestamp": "2023-08-04T22:16:20.593159Z",
+    "stations_updated": "2023-06-06",
+    "cache-timestamp": "2023-08-04T22:16:13.662000Z"
+  },
+  "altimeter": {
+    "repr": "Q1011",
+    "value": 1011,
+    "spoken": "one zero one one"
+  },
+  "clouds": [
+    {
+      "repr": "FEW002",
+      "type": "FEW",
+      "altitude": 2,
+      "modifier": null
+    }
+  ],
+  "flight_rules": "VFR",
+  "other": [],
+  "visibility": {
+    "repr": "9999",
+    "value": 9999,
+    "spoken": "nine nine nine nine"
+  },
+  "wind_direction": {
+    "repr": "300",
+    "value": 300,
+    "spoken": "three zero zero"
+  },
+  "wind_gust": null,
+  "wind_speed": {
+    "repr": "05",
+    "value": 5,
+    "spoken": "five"
+  },
+  "wx_codes": [],
+  "raw": "LOWG 042150Z AUTO 30005KT 260V320 9999 FEW002 16/16 Q1011",
+  "sanitized": "LOWG 042150Z 30005KT 260V320 9999 FEW002 16/16 Q1011",
+  "station": "LOWG",
+  "time": {
+    "repr": "042150Z",
+    "dt": "2023-08-04T21:50:00Z"
+  },
+  "remarks": "",
+  "dewpoint": {
+    "repr": "16",
+    "value": 16,
+    "spoken": "one six"
+  },
+  "relative_humidity": 1,
+  "remarks_info": null,
+  "runway_visibility": [],
+  "temperature": {
+    "repr": "16",
+    "value": 16,
+    "spoken": "one six"
+  },
+  "wind_variable_direction": [
+    {
+      "repr": "260",
+      "value": 260,
+      "spoken": "two six zero"
+    },
+    {
+      "repr": "320",
+      "value": 320,
+      "spoken": "three two zero"
+    }
+  ],
+  "density_altitude": 1568,
+  "pressure_altitude": 1180,
+  "units": {
+    "accumulation": "in",
+    "altimeter": "hPa",
+    "altitude": "ft",
+    "temperature": "C",
+    "visibility": "m",
+    "wind_speed": "kt"
+  }
+}

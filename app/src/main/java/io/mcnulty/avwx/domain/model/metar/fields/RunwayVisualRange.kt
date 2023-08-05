@@ -2,13 +2,13 @@ package io.mcnulty.avwx.domain.model.metar.fields
 
 import io.mcnulty.avwx.domain.model.airport.runway.Runway
 import io.mcnulty.avwx.domain.model.metar.MetarBlock
-import io.mcnulty.avwx.domain.model.metar.measurement.VisibilityUnits
+import io.mcnulty.avwx.domain.model.metar.measurement.AltitudeUnits
 
 data class RunwayVisualRange(
     val runway: Runway,
     val maxVisibility: RvRVisibility,
     val minVisibility: RvRVisibility? = null,
-    override val units: VisibilityUnits = VisibilityUnits.FEET
+    override val units: AltitudeUnits = AltitudeUnits.FEET
 ) : MetarBlock, Measurable {
 
     data class RvRVisibility internal constructor(

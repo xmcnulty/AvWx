@@ -4,6 +4,7 @@ import io.mcnulty.avwx.data.remote.dto.metar.MetarDto
 import io.mcnulty.avwx.data.remote.dto.metar.RunwayVisibilityDto
 import io.mcnulty.avwx.domain.model.airport.runway.Runway
 import io.mcnulty.avwx.domain.model.metar.fields.RunwayVisualRange
+import io.mcnulty.avwx.domain.model.metar.measurement.AltitudeUnits
 import io.mcnulty.avwx.domain.model.metar.measurement.VisibilityUnits
 
 /**
@@ -20,7 +21,7 @@ internal object RVRParser {
      */
     fun parse(
         rvrDto: List<RunwayVisibilityDto>,
-        units: VisibilityUnits
+        units: AltitudeUnits
     ): List<RunwayVisualRange> = rvrDto.map { dto ->
         val runway = Runway.build(dto.runway)
 

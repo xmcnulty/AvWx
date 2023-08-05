@@ -4,7 +4,7 @@ import io.mcnulty.avwx.domain.model.metar.MetarBlock
 import io.mcnulty.avwx.domain.model.metar.measurement.TemperatureUnits
 
 data class Temperature(
-    val temp: Double,
+    val temp: Int,
     override val units: TemperatureUnits = TemperatureUnits.CELSIUS
 ) : MetarBlock, Measurable {
     override val code: String

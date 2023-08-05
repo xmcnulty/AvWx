@@ -87,9 +87,9 @@ data class Clouds(
         TOWERING_CUMULUS("TCU", "Towering Cumulus");
 
         companion object {
-            fun fromCode(code: String): Type? {
-                return values().firstOrNull { it.code == code }
+            fun fromCode(code: String?): Type? = code?.let {
+                values().firstOrNull { it.code == code }
             }
-        }
+    }
     }
 }

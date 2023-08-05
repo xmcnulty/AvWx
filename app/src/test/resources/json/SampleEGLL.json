@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "timestamp": "2023-08-04T21:06:21.467537Z",
+    "stations_updated": "2023-06-06",
+    "cache-timestamp": "2023-08-04T21:06:04.527000Z"
+  },
+  "altimeter": {
+    "repr": "Q1018",
+    "value": 1018,
+    "spoken": "one zero one eight"
+  },
+  "clouds": [],
+  "flight_rules": "VFR",
+  "other": [],
+  "visibility": {
+    "repr": "9999",
+    "value": 9999,
+    "spoken": "nine nine nine nine"
+  },
+  "wind_direction": {
+    "repr": "310",
+    "value": 310,
+    "spoken": "three one zero"
+  },
+  "wind_gust": null,
+  "wind_speed": {
+    "repr": "03",
+    "value": 3,
+    "spoken": "three"
+  },
+  "wx_codes": [],
+  "raw": "EGLL 042050Z AUTO 31003KT 9999 NCD 17/10 Q1018",
+  "sanitized": "EGLL 042050Z 31003KT 9999 17/10 Q1018",
+  "station": "EGLL",
+  "time": {
+    "repr": "042050Z",
+    "dt": "2023-08-04T20:50:00Z"
+  },
+  "remarks": "",
+  "dewpoint": {
+    "repr": "10",
+    "value": 10,
+    "spoken": "one zero"
+  },
+  "relative_humidity": 0.6337585844216224,
+  "remarks_info": null,
+  "runway_visibility": [],
+  "temperature": {
+    "repr": "17",
+    "value": 17,
+    "spoken": "one seven"
+  },
+  "wind_variable_direction": [],
+  "density_altitude": 201,
+  "pressure_altitude": -59,
+  "units": {
+    "accumulation": "in",
+    "altimeter": "hPa",
+    "altitude": "ft",
+    "temperature": "C",
+    "visibility": "m",
+    "wind_speed": "kt"
+  }
+}

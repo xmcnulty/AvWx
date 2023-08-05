@@ -2,7 +2,6 @@ package io.mcnulty.avwx.data.remote.dto.metar
 
 import com.google.gson.annotations.SerializedName
 import io.mcnulty.avwx.data.remote.dto.FieldInfoDto
-import io.mcnulty.avwx.data.remote.dto.metar.remarks_info.RemarksInfo
 
 data class MetarDto(
     @SerializedName("altimeter")
@@ -24,8 +23,6 @@ data class MetarDto(
     @SerializedName("relative_humidity")
     val relativeHumidity: Double,
     val remarks: String,
-    @SerializedName("remarks_info")
-    val remarksInfo: RemarksInfo,
     @SerializedName("runway_visibility")
     val runwayVisibility: List<RunwayVisibilityDto>,
     val sanitized: String,
