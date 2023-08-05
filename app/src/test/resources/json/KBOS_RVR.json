@@ -1,0 +1,155 @@
+{
+  "altimeter": {
+    "repr": "A2941",
+    "value": 29.41,
+    "spoken": "two nine point four one"
+  },
+  "clouds": [
+    {
+      "repr": "SCT030",
+      "type": "SCT",
+      "altitude": 30,
+      "modifier": null
+    },
+    {
+      "repr": "BKN080",
+      "type": "BKN",
+      "altitude": 80,
+      "modifier": null
+    }
+  ],
+  "flight_rules": "VFR",
+  "other": [],
+  "visibility": {
+    "repr": "10",
+    "value": 10,
+    "spoken": "one zero"
+  },
+  "wind_direction": {
+    "repr": "270",
+    "value": 270,
+    "spoken": "two seven zero"
+  },
+  "wind_gust": {
+    "repr": "25",
+    "value": 25,
+    "spoken": "two five"
+  },
+  "wind_speed": {
+    "repr": "18",
+    "value": 18,
+    "spoken": "one eight"
+  },
+  "wx_codes": [
+    {
+      "repr": "+RA",
+      "value": "Heavy Rain"
+    },
+    {
+      "repr": "-TSRA",
+      "value": "Light Thunderstorm Rain"
+    }
+  ],
+  "raw": "KBOS 271454Z 27018G25KT 240V300 10SM R04R/6000VP6000FT +RA -TSRA SCT030 BKN080 12/03 A2941 RMK AO2 PK WND 28032/1420 SFC VIS 10 DZE36RAB36E39 OCNL LTGICCC DSNT E-SE SLP958 T01220028 53036",
+  "sanitized": "KBOS 271454Z 27018G25KT 240V300 10SM R04R/6000VP6000FT +RA -TSRA SCT030 BKN080 12/03 A2941 RMK AO2 PK WND 28032/1420 SFC VIS 10 DZE36RAB36E39 OCNL LTGICCC DSNT E-SE SLP958 T01220028 53036",
+  "station": "KBOS",
+  "time": {
+    "repr": "271454Z",
+    "dt": "2023-07-27T14:54:00Z"
+  },
+  "remarks": "RMK AO2 PK WND 28032/1420 SFC VIS 10 DZE36RAB36E39 OCNL LTGICCC DSNT E-SE SLP958 T01220028 53036",
+  "dewpoint": {
+    "repr": "03",
+    "value": 3,
+    "spoken": "three"
+  },
+  "relative_humidity": 0.5261352681877759,
+  "remarks_info": {
+    "maximum_temperature_6": {},
+    "minimum_temperature_6": {},
+    "pressure_tendency": {
+      "repr": "53036",
+      "tendency": "Decreasing or steady, then increasing",
+      "change": 3.6
+    },
+    "precip_36_hours": {},
+    "precip_24_hours": {},
+    "sunshine_minutes": {},
+    "codes": [
+      {
+        "repr": "AO2",
+        "value": "Automated with precipitation sensor"
+      }
+    ],
+    "dewpoint_decimal": {
+      "repr": "0028",
+      "value": 2.8,
+      "spoken": "two point eight"
+    },
+    "maximum_temperature_24": {},
+    "minimum_temperature_24": {},
+    "precip_hourly": {},
+    "sea_level_pressure": {
+      "repr": "SLP958",
+      "value": 995.8,
+      "spoken": "nine nine five point eight"
+    },
+    "snow_depth": {},
+    "temperature_decimal": {
+      "repr": "0122",
+      "value": 12.2,
+      "spoken": "one two point two"
+    }
+  },
+  "runway_visibility": [
+    {
+      "repr": "R04R/6000VP6000FT",
+      "runway": "04R",
+      "visibility": {},
+      "variable_visibility": [
+        {
+          "repr": "6000",
+          "value": 6000,
+          "spoken": "six thousand"
+        },
+        {
+          "repr": "P6000",
+          "value": {},
+          "spoken": "greater than six thousand"
+        }
+      ],
+      "trend": {}
+    }
+  ],
+  "temperature": {
+    "repr": "12",
+    "value": 12,
+    "spoken": "one two"
+  },
+  "wind_variable_direction": [
+    {
+      "repr": "240",
+      "value": 240,
+      "spoken": "two four zero"
+    },
+    {
+      "repr": "300",
+      "value": 300,
+      "spoken": "three zero zero"
+    }
+  ],
+  "density_altitude": 199,
+  "pressure_altitude": 530,
+  "meta": {
+    "timestamp": "2023-08-04T22:34:52.282901Z",
+    "stations_updated": "2023-06-06"
+  },
+  "units": {
+    "accumulation": "in",
+    "altimeter": "inHg",
+    "altitude": "ft",
+    "temperature": "C",
+    "visibility": "sm",
+    "wind_speed": "kt"
+  }
+}

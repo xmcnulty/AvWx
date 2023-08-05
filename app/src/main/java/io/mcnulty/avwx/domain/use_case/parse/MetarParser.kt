@@ -12,18 +12,18 @@ import io.mcnulty.avwx.domain.model.metar.measurement.PressureUnits
 import io.mcnulty.avwx.domain.model.metar.measurement.TemperatureUnits
 import io.mcnulty.avwx.domain.model.metar.measurement.VisibilityUnits
 import io.mcnulty.avwx.domain.model.metar.measurement.WindSpeedUnits
-
-internal const val ALTITUDE_KEY = "altitude"
-internal const val PRESSURE_KEY = "pressure"
-internal const val TEMPERATURE_KEY = "temperature"
-internal const val VISIBILITY_KEY = "visibility"
-internal const val WIND_SPEED_KEY = "windSpeed"
-
 /**
  * Converts a [MetarDto] to a [Metar] domain object.
  *
  */
 object MetarParser {
+    private const val ALTITUDE_KEY = "altitude"
+    private const val PRESSURE_KEY = "pressure"
+    private const val TEMPERATURE_KEY = "temperature"
+    private const val VISIBILITY_KEY = "visibility"
+    private const val WIND_SPEED_KEY = "windSpeed"
+
+
     /**
      * Converts a [MetarDto] to a [Metar] domain object. This is the main entry point for the
      * converter.
@@ -43,18 +43,18 @@ object MetarParser {
                 speed = dto.windSpeed.value,
                 gust = dto.windGust?.value,
                 variableDirections = dto.windVariableDirection,
-                units = unitsMap["windSpeed"] as WindSpeedUnits
+                units = unitsMap[WIND_SPEED_KEY] as WindSpeedUnits
             ),
             visibility = Visibility(
                 code = dto.visibilityDto.repr,
                 value = dto.visibilityDto.value.toDouble(),
-                units = unitsMap["visibility"] as VisibilityUnits
+                units = unitsMap[VISIBILITY_KEY] as VisibilityUnits
             ),
             runwayVisualRange = RVRParser.parse(
                 dto.runwayVisibility,
-                unitsMap["altitude"] as VisibilityUnits
+                unitsMap[ALTITUDE_KEY] as AltitudeUnits
             ),
-            altimeter = AltimeterParser.parse(dto.altimeterDto, unitsMap["pressure"] as PressureUnits),
+            altimeter = AltimeterParser.parse(dto.altimeterDto, unitsMap[PRESSURE_KEY] as PressureUnits),
             clouds = CloudParser.parse(dto.cloudDtos),
             dewPoint = dto.dewpointDto.value,
             temperature = TemperatureParser.parse(

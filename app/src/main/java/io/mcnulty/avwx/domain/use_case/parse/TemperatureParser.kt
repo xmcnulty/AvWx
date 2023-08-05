@@ -18,9 +18,5 @@ internal object TemperatureParser {
     fun parse(
         dto: MetarDto,
         units: TemperatureUnits
-    ): Temperature {
-        return dto.remarksInfo.temperatureDecimal?.let { tempDecimal ->
-            Temperature(tempDecimal.value, units)
-        } ?: Temperature(dto.temperatureDto.value.toDouble(), units)
-    }
+    ): Temperature = Temperature(dto.temperatureDto.value, units)
 }

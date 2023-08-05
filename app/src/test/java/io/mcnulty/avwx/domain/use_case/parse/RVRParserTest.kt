@@ -3,7 +3,7 @@ package io.mcnulty.avwx.domain.use_case.parse
 import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
 import io.mcnulty.avwx.data.remote.dto.metar.RunwayVisibilityDto
-import io.mcnulty.avwx.domain.model.metar.measurement.VisibilityUnits
+import io.mcnulty.avwx.domain.model.metar.measurement.AltitudeUnits
 import org.junit.Test
 
 class RVRParserTest {
@@ -28,7 +28,7 @@ class RVRParserTest {
             trend = ""
         )
 
-        val rvr = RVRParser.parse(listOf(rvrDto), VisibilityUnits.FEET)
+        val rvr = RVRParser.parse(listOf(rvrDto), AltitudeUnits.FEET)
 
         assertThat(rvr).hasSize(1)
         assertThat(rvr[0].code).isEqualTo(expectedCode)
@@ -47,7 +47,7 @@ class RVRParserTest {
             trend = ""
         )
 
-        val rvr = RVRParser.parse(listOf(rvrDto), VisibilityUnits.FEET)
+        val rvr = RVRParser.parse(listOf(rvrDto), AltitudeUnits.FEET)
 
         assertThat(rvr).hasSize(1)
         assertThat(rvr[0].code).isEqualTo(expectedCode)
@@ -66,7 +66,7 @@ class RVRParserTest {
             trend = ""
         )
 
-        val rvr = RVRParser.parse(listOf(rvrDto), VisibilityUnits.FEET)
+        val rvr = RVRParser.parse(listOf(rvrDto), AltitudeUnits.FEET)
 
         assertThat(rvr).hasSize(1)
         assertThat(rvr[0].code).isEqualTo(expectedCode)
@@ -85,7 +85,7 @@ class RVRParserTest {
             trend = ""
         )
 
-        val rvr = RVRParser.parse(listOf(rvrDto), VisibilityUnits.FEET)
+        val rvr = RVRParser.parse(listOf(rvrDto), AltitudeUnits.FEET)
 
         assertThat(rvr).hasSize(1)
         assertThat(rvr[0].code).isEqualTo(expectedCode)
@@ -107,7 +107,7 @@ class RVRParserTest {
             trend = ""
         )
 
-        val rvr = RVRParser.parse(listOf(rvrDto), VisibilityUnits.FEET)
+        val rvr = RVRParser.parse(listOf(rvrDto), AltitudeUnits.FEET)
 
         assertThat(rvr).hasSize(1)
         assertThat(rvr[0].code).isEqualTo(expectedCode)
@@ -129,7 +129,7 @@ class RVRParserTest {
             trend = ""
         )
 
-        val rvr = RVRParser.parse(listOf(rvrDto), VisibilityUnits.FEET)
+        val rvr = RVRParser.parse(listOf(rvrDto), AltitudeUnits.FEET)
 
         assertThat(rvr).hasSize(1)
         assertThat(rvr[0].code).isEqualTo(expectedCode)
@@ -162,7 +162,7 @@ class RVRParserTest {
             trend = ""
         )
 
-        val rvr = RVRParser.parse(listOf(rvrDto1, rvrDto2), VisibilityUnits.FEET)
+        val rvr = RVRParser.parse(listOf(rvrDto1, rvrDto2), AltitudeUnits.FEET)
 
         assertThat(rvr).hasSize(2)
 
@@ -207,7 +207,7 @@ class RVRParserTest {
 
         val rvrDto = Gson().fromJson(json, Array<RunwayVisibilityDto>::class.java).toList()
 
-        val rvr = RVRParser.parse(rvrDto, VisibilityUnits.FEET)
+        val rvr = RVRParser.parse(rvrDto, AltitudeUnits.FEET)
 
         assertThat(rvr).hasSize(1)
         assertThat(rvr[0].code).isEqualTo("R04R/6000VP6000ft")
@@ -219,7 +219,7 @@ class RVRParserTest {
 
         val rvrDto = Gson().fromJson(json, Array<RunwayVisibilityDto>::class.java).toList()
 
-        val rvr = RVRParser.parse(rvrDto, VisibilityUnits.FEET)
+        val rvr = RVRParser.parse(rvrDto, AltitudeUnits.FEET)
 
         assertThat(rvr).isEmpty()
     }
@@ -269,7 +269,7 @@ class RVRParserTest {
 
         val rvrDto = Gson().fromJson(json, Array<RunwayVisibilityDto>::class.java).toList()
 
-        val rvr = RVRParser.parse(rvrDto, VisibilityUnits.FEET)
+        val rvr = RVRParser.parse(rvrDto, AltitudeUnits.FEET)
 
         assertThat(rvr).hasSize(2)
 
@@ -306,7 +306,7 @@ class RVRParserTest {
 
         val rvrDto = Gson().fromJson(json, Array<RunwayVisibilityDto>::class.java).toList()
 
-        val rvr = RVRParser.parse(rvrDto, VisibilityUnits.FEET)
+        val rvr = RVRParser.parse(rvrDto, AltitudeUnits.FEET)
 
         assertThat(rvr).hasSize(1)
 
