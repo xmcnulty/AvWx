@@ -121,6 +121,29 @@ class MetarRepositoryImplTest {
             .isEqualTo("spoken%2Cother%2Csanitized%2Cremarks_info%2Cdt%2Caccumulation")
     }
 
+    fun `test invalid search parameter`() {
+        val expectedResponse = MockResponse()
+            .setResponseCode(HttpURLConnection.HTTP_BAD_REQUEST)
+            .setBody(
+                """{
+                      "error": "K is not a valid ICAO, IATA, or GPS code",
+                      "param": "station",
+                      "help": "ICAO, IATA, GPS code, or coord pair. Ex: KJFK, LHR, or \"12.34,-12.34\"",
+                      "timestamp": "2023-08-06T16:54:38.621146Z"
+                    }""".trimIndent()
+            )
+
+        mockWebServer.enqueue(expectedResponse)
+
+        val actualResponse = runBlocking {
+            repository.getMetar("K")
+        }
+
+        assertThat(actualResponse.httpCode).isEqualTo(HttpURLConnection.HTTP_BAD_REQUEST)
+        assertThat(actualResponse.errorMessage)
+            .isEqualTo("ICAO, IATA, or GPS code not found")
+    }
+
     @After
     fun tearDown() {
         mockWebServer.shutdown()

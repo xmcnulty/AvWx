@@ -20,10 +20,16 @@ class MetarRepositoryImpl @Inject constructor(
             body = MetarParser.toMetar(api.getMetar(fieldCode))
         )
     } catch (e: HttpException) {
-        ApiResponse(
-            httpCode = e.code(),
-            errorMessage = "server error"
-        )
+        when(e.code()) {
+            400 -> ApiResponse(
+                httpCode = e.code(),
+                errorMessage = "ICAO, IATA, or GPS code not found"
+            )
+            else -> ApiResponse(
+                httpCode = e.code(),
+                errorMessage = "server error"
+            )
+        }
     } catch (e: IOException) {
         ApiResponse(
             errorMessage = "connection error"
