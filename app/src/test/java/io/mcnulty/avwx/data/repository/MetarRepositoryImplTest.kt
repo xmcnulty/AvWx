@@ -4,6 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
 import io.mcnulty.avwx.data.remote.AvWxApi
 import io.mcnulty.avwx.data.remote.dto.metar.MetarDto
+import io.mcnulty.avwx.data.remote.removeQuery
 import io.mcnulty.avwx.domain.repository.metar.MetarRepository
 import io.mcnulty.avwx.domain.use_case.parse.MetarParser
 import kotlinx.coroutines.runBlocking
@@ -112,6 +113,12 @@ class MetarRepositoryImplTest {
         }
 
         assertThat(actualResponse.errorMessage).isEqualTo("connection error")
+    }
+
+    @Test
+    fun `check valid remove query`() {
+        assertThat(removeQuery)
+            .isEqualTo("spoken%2Cother%2Csanitized%2Cremarks_info%2Cdt%2Caccumulation")
     }
 
     @After
