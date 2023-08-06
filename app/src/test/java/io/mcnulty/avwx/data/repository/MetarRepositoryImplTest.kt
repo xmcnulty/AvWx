@@ -121,6 +121,7 @@ class MetarRepositoryImplTest {
             .isEqualTo("spoken%2Cother%2Csanitized%2Cremarks_info%2Cdt%2Caccumulation")
     }
 
+    @Test
     fun `test invalid search parameter`() {
         val expectedResponse = MockResponse()
             .setResponseCode(HttpURLConnection.HTTP_BAD_REQUEST)
