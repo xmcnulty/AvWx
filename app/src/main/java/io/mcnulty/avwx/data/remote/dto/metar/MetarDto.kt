@@ -13,7 +13,6 @@ data class MetarDto(
     val dewpointDto: DewpointDto,
     @SerializedName("flight_rules")
     val flightRules: String,
-    val other: List<Any>,
     @SerializedName("pressure_altitude")
     val pressureAltitude: Int,
     val raw: String,
@@ -22,7 +21,6 @@ data class MetarDto(
     val remarks: String,
     @SerializedName("runway_visibility")
     val runwayVisibility: List<RunwayVisibilityDto>,
-    val sanitized: String,
     val station: String,
     @SerializedName("temperature")
     val temperatureDto: TemperatureDto,

@@ -9,7 +9,7 @@ class AltimeterParserTest {
     @Test
     fun `parse should return AtmosphericPressure Altimeter when using PressureUnits INCHES_OF_MERCURY`() {
         // Arrange
-        val altimeterDto = AltimeterDto("A2966", "two nine point six six", 29.66)
+        val altimeterDto = AltimeterDto("A2966", 29.66)
         val units = PressureUnits.INCHES_OF_MERCURY
 
         // Act
@@ -22,7 +22,7 @@ class AltimeterParserTest {
     @Test
     fun `parse should return AtmosphericPressure Qnh when using PressureUnits HECTOPASCALS`() {
         // Arrange
-        val altimeterDto = AltimeterDto("Q1000", "one zero zero zero", 1000)
+        val altimeterDto = AltimeterDto("Q1000", 1000)
         val units = PressureUnits.HECTOPASCALS
 
         // Act

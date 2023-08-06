@@ -12,7 +12,6 @@ class RVRParserTest {
         repr: String
     ) = RunwayVisibilityDto.RunwayVisibility(
         repr = repr,
-        spoken = "",
         value = 0
     )
 

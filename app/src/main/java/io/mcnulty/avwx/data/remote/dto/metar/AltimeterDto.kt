@@ -10,11 +10,9 @@ package io.mcnulty.avwx.data.remote.dto.metar
  *
  *
  * @property repr The raw METAR string
- * @property spoken The METAR string with all abbreviations expanded
  * @property value The altimeter value
  */
 data class AltimeterDto(
     val repr: String,
-    val spoken: String,
     val value: Number
 )
