@@ -90,6 +90,12 @@ data class Clouds(
             fun fromCode(code: String?): Type? = code?.let {
                 values().firstOrNull { it.code == code }
             }
+        }
     }
-    }
+
+    override fun equals(other: Any?): Boolean = other?.let {
+        it is Clouds && it.code == code
+    } ?: false
+
+    override fun hashCode(): Int = code.hashCode()
 }

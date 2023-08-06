@@ -9,6 +9,7 @@ import io.mcnulty.avwx.domain.use_case.parse.MetarParser
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
+import okhttp3.mockwebserver.SocketPolicy
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -69,7 +70,7 @@ class MetarRepositoryImplTest {
 
     @Test
     fun `test valid response with json metar body`() {
-        val inputStream = InputStreamReader(javaClass.classLoader.getResourceAsStream("json/SampleKJFK.json"))
+        val inputStream = InputStreamReader(javaClass.classLoader!!.getResourceAsStream("json/SampleKJFK.json"))
         val json = BufferedReader(inputStream).use { it.readText() }
 
         val mockMetar = MetarParser.toMetar(
@@ -90,6 +91,27 @@ class MetarRepositoryImplTest {
 
         assertThat(actualResponse.body).isNotNull()
         assertThat(actualResponse.body).isEqualTo(mockMetar)
+    }
+
+    @Test
+    fun `test IOException thrown`() {
+        val inputStream = InputStreamReader(javaClass.classLoader!!.getResourceAsStream("json/SampleKJFK.json"))
+        val json = BufferedReader(inputStream).use { it.readText() }
+
+        val expectedResponse = MockResponse()
+            .setResponseCode(HttpURLConnection.HTTP_OK)
+            .setBody(json)
+            .setSocketPolicy(SocketPolicy.DISCONNECT_DURING_RESPONSE_BODY)
+
+        mockWebServer.enqueue(expectedResponse)
+
+        inputStream.close()
+
+        val actualResponse = runBlocking {
+            repository.getMetar("KJFK")
+        }
+
+        assertThat(actualResponse.errorMessage).isEqualTo("connection error")
     }
 
     @After

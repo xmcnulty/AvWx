@@ -11,6 +11,7 @@ import io.mcnulty.avwx.domain.model.metar.fields.FlightRules
 import io.mcnulty.avwx.domain.model.metar.fields.MetarTime
 import io.mcnulty.avwx.domain.model.metar.fields.RunwayVisualRange
 import io.mcnulty.avwx.domain.model.metar.fields.Temperature
+import io.mcnulty.avwx.domain.model.metar.fields.Weather
 import io.mcnulty.avwx.domain.model.metar.fields.Winds
 import io.mcnulty.avwx.domain.model.metar.measurement.AltitudeUnits
 import io.mcnulty.avwx.domain.model.metar.measurement.PressureUnits
@@ -23,7 +24,7 @@ class MetarParserTest {
     private lateinit var inputStream: InputStreamReader
 
     private fun getMetarFromJsonFile(fileName: String): MetarDto {
-        inputStream = InputStreamReader(javaClass.classLoader.getResourceAsStream("json/$fileName"))
+        inputStream = InputStreamReader(javaClass.classLoader!!.getResourceAsStream("json/$fileName"))
         val json = BufferedReader(inputStream).use { it.readText() }
 
 
@@ -46,24 +47,28 @@ class MetarParserTest {
 
         // check clouds
         assertThat(metar.clouds).hasSize(3)
-        assertThat(metar.clouds[0].coverage).isEqualTo(Clouds.Coverage.FEW)
-        assertThat(metar.clouds[0].altitude).isEqualTo(2400)
-        assertThat(metar.clouds[1].coverage).isEqualTo(Clouds.Coverage.BROKEN)
-        assertThat(metar.clouds[1].altitude).isEqualTo(3600)
-        assertThat(metar.clouds[2].coverage).isEqualTo(Clouds.Coverage.OVERCAST)
-        assertThat(metar.clouds[2].altitude).isEqualTo(4600)
-        metar.clouds.forEach {
-            assertThat(it.type).isNull()
-            assertThat(it.units).isEqualTo(AltitudeUnits.FEET)
+        val expectedClouds = listOf(
+            Clouds(coverage = Clouds.Coverage.FEW, altitude = 2400, units = AltitudeUnits.FEET),
+            Clouds(coverage = Clouds.Coverage.BROKEN, altitude = 3600, units = AltitudeUnits.FEET),
+            Clouds(coverage = Clouds.Coverage.OVERCAST, altitude = 4600, units = AltitudeUnits.FEET)
+        )
+        metar.clouds.forEachIndexed { index, clouds ->
+            assertThat(clouds).isEqualTo(expectedClouds[index])
         }
 
         // check weather
         assertThat(metar.weather).hasSize(1)
-        assertThat(metar.weather[0].code).isEqualTo("-RA")
-        assertThat(metar.weather[0].description).isEqualTo("Light Rain")
+        val expectedWeather = listOf(
+            Weather(code = "-RA", description = "Light Rain")
+        )
+
+        assertThat(metar.weather).isEqualTo(expectedWeather)
 
         // check flight rules
         assertThat(metar.flightRules).isEqualTo(FlightRules.VFR)
+
+        // check visibility
+        assertThat(metar.visibility.description).isEqualTo("At least 10 statute miles")
 
         // check temp
         val expectedTemp = Temperature(10)
@@ -156,7 +161,14 @@ class MetarParserTest {
 
             // check clouds
             assertThat(metar.clouds).hasSize(1)
-            assertThat(metar.clouds[0].code).isEqualTo("FEW002")
+            assertThat(metar.clouds[0])
+                .isEqualTo(
+                    Clouds(
+                        coverage = Clouds.Coverage.FEW,
+                        altitude = 200,
+                        units = AltitudeUnits.FEET
+                    )
+                )
 
             // check weather
             assertThat(metar.weather).isEmpty()
@@ -202,21 +214,26 @@ class MetarParserTest {
 
             // check clouds
             assertThat(metar.clouds).hasSize(2)
-            assertThat(metar.clouds[0].coverage).isEqualTo(Clouds.Coverage.SCATTERED)
-            assertThat(metar.clouds[0].altitude).isEqualTo(3000)
-            assertThat(metar.clouds[1].coverage).isEqualTo(Clouds.Coverage.BROKEN)
-            assertThat(metar.clouds[1].altitude).isEqualTo(8000)
-            metar.clouds.forEach {
-                assertThat(it.type).isNull()
-                assertThat(it.units).isEqualTo(AltitudeUnits.FEET)
+
+            val expectedClouds = listOf(
+                Clouds(coverage = Clouds.Coverage.SCATTERED, altitude = 3000, units = AltitudeUnits.FEET),
+                Clouds(coverage = Clouds.Coverage.BROKEN, altitude = 8000, units = AltitudeUnits.FEET)
+            )
+
+            metar.clouds.forEachIndexed { index, clouds ->
+                assertThat(clouds).isEqualTo(expectedClouds[index])
             }
 
             // check weather
             assertThat(metar.weather).hasSize(2)
-            assertThat(metar.weather[0].code).isEqualTo("+RA")
-            assertThat(metar.weather[0].description).isEqualTo("Heavy Rain")
-            assertThat(metar.weather[1].code).isEqualTo("-TSRA")
-            assertThat(metar.weather[1].description).isEqualTo("Light Thunderstorm Rain")
+
+            val expectedWeather = listOf(
+                Weather(code = "-TSRA", description = "Light Thunderstorm Rain"),
+                Weather(code = "+RA", description = "Heavy Rain")
+            )
+
+            assertThat(metar.weather)
+                .containsExactlyElementsIn(expectedWeather)
 
             // check flight rules
             assertThat(metar.flightRules).isEqualTo(FlightRules.VFR)
@@ -256,9 +273,15 @@ class MetarParserTest {
 
         // check clouds
         assertThat(metar.clouds).hasSize(4)
-        assertThat(metar.clouds[0].coverage).isEqualTo(Clouds.Coverage.BROKEN)
-        assertThat(metar.clouds[0].altitude).isEqualTo(3300)
-        assertThat(metar.clouds[0].type).isEqualTo(Clouds.Type.CUMULONIMBUS)
+
+        val expectedCbCloud = Clouds(
+            coverage = Clouds.Coverage.BROKEN,
+            altitude = 3300,
+            units = AltitudeUnits.FEET,
+            type = Clouds.Type.CUMULONIMBUS
+        )
+
+        assertThat(metar.clouds[0]).isEqualTo(expectedCbCloud)
     }
 
     @After

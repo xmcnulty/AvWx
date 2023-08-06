@@ -48,30 +48,8 @@ data class Metar(
     val flightRules: FlightRules
 ) {
     override fun equals(other: Any?): Boolean = other?.let {
-
-        // check if the other object is a Metar
-        if (it !is Metar) {
-            false
-        } else {
-            it.raw == this.raw
-        }
+        it is Metar && it.raw == raw
     } ?: false
-    override fun hashCode(): Int {
-        var result = raw.hashCode()
-        result = 31 * result + stationIdentifier.hashCode()
-        result = 31 * result + type.hashCode()
-        result = 31 * result + time.hashCode()
-        result = 31 * result + wind.hashCode()
-        result = 31 * result + visibility.hashCode()
-        result = 31 * result + runwayVisualRange.hashCode()
-        result = 31 * result + weather.hashCode()
-        result = 31 * result + clouds.hashCode()
-        result = 31 * result + temperature.hashCode()
-        result = 31 * result + dewPoint.hashCode()
-        result = 31 * result + altimeter.hashCode()
-        result = 31 * result + (remarks?.hashCode() ?: 0)
-        result = 31 * result + relativeHumidity.hashCode()
-        result = 31 * result + flightRules.hashCode()
-        return result
-    }
+
+    override fun hashCode(): Int = raw.hashCode()
 }
