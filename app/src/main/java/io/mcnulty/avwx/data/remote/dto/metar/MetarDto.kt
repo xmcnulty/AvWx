@@ -1,7 +1,6 @@
 package io.mcnulty.avwx.data.remote.dto.metar
 
 import com.google.gson.annotations.SerializedName
-import io.mcnulty.avwx.data.remote.dto.FieldInfoDto
 
 data class MetarDto(
     @SerializedName("altimeter")
@@ -14,8 +13,6 @@ data class MetarDto(
     val dewpointDto: DewpointDto,
     @SerializedName("flight_rules")
     val flightRules: String,
-    val info: FieldInfoDto,
-    val meta: MetaData,
     val other: List<Any>,
     @SerializedName("pressure_altitude")
     val pressureAltitude: Int,

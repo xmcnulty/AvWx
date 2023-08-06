@@ -16,7 +16,7 @@ class Visibility(
             }
 
             if (units == VisibilityUnits.STATUTE_MILES && value == 10.0) {
-                return "At least 10SM statute miles"
+                return "At least 10 statute miles"
             }
 
             return "Visibility: ${value}${units.abbreviation}"
