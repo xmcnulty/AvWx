@@ -24,7 +24,7 @@ import io.mcnulty.avwx.domain.model.metar.fields.Winds
  * @property weather The weather conditions
  * @property clouds The cloud conditions
  * @property temperature The temperature conditions
- * @property dewPoint The dew point conditions
+ * @property dewpoint The dew point conditions
  * @property altimeter The altimeter conditions
  * @property remarks The remarks section of the METAR report
  * @property relativeHumidity The relative humidity conditions
@@ -41,7 +41,7 @@ data class Metar(
     val weather: List<Weather>,
     val clouds: List<Clouds>,
     val temperature: Temperature,
-    val dewPoint: Number,
+    val dewpoint: Number,
     val altimeter: AtmosphericPressure,
     val remarks: String? = null,
     val relativeHumidity: Number,

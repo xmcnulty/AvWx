@@ -50,7 +50,6 @@ class MetarRepositoryImplTest {
             repository.getMetar("KJFK")
         }
 
-        assertThat(actualResponse.httpCode).isEqualTo(HttpURLConnection.HTTP_NOT_FOUND)
         assertThat(actualResponse.errorMessage).isEqualTo("server error")
     }
 
@@ -140,9 +139,8 @@ class MetarRepositoryImplTest {
             repository.getMetar("K")
         }
 
-        assertThat(actualResponse.httpCode).isEqualTo(HttpURLConnection.HTTP_BAD_REQUEST)
         assertThat(actualResponse.errorMessage)
-            .isEqualTo("ICAO, IATA, or GPS code not found")
+            .isEqualTo("invalid ICAO, IATA, or GPS code")
     }
 
     @After

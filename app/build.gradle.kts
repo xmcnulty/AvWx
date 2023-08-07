@@ -180,6 +180,7 @@ dependencies {
     testImplementation (libs.truth)
     testImplementation (libs.mockwebserver)
     testImplementation(libs.coroutines.test)
+    testImplementation(libs.mockk)
     androidTestImplementation (libs.ext.junit)
     androidTestImplementation (libs.espresso.core)
     androidTestImplementation(libs.truth)
