@@ -28,10 +28,12 @@ object MetarParser {
      * Converts a [MetarDto] to a [Metar] domain object. This is the main entry point for the
      * converter.
      *
+     * @throws IllegalArgumentException If the [MetarDto] is null
      * @param dto The [MetarDto] to convert
      * @return The converted [Metar]
      */
     fun toMetar(dto: MetarDto): Metar {
+
         val unitsMap: Map<String, MetarUnits> = parseUnits(dto.unitsDto)
 
         return Metar(
@@ -56,7 +58,7 @@ object MetarParser {
             ),
             altimeter = AltimeterParser.parse(dto.altimeterDto, unitsMap[PRESSURE_KEY] as PressureUnits),
             clouds = CloudParser.parse(dto.cloudDtos),
-            dewPoint = dto.dewpointDto.value,
+            dewpoint = dto.dewpointDto.value,
             temperature = TemperatureParser.parse(
                 dto,
                 unitsMap[TEMPERATURE_KEY] as TemperatureUnits
