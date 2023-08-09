@@ -10,6 +10,11 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
+/**
+ * Use case for searching for weather reporting airports based on user input.
+ *
+ * @param repository the repository to use for searching
+ */
 class SearchAirportUseCase @Inject constructor(
     private val repository: AirportRepository
 ) {
