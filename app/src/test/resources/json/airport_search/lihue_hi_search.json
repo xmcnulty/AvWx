@@ -1,0 +1,65 @@
+[
+  {
+    "city": "Lihue",
+    "country": "US",
+    "iata": "LIH",
+    "icao": "PHLI",
+    "name": "Lihue Airport"
+  },
+  {
+    "city": "Rome",
+    "country": "IT",
+    "iata": null,
+    "icao": "LIRU",
+    "name": "Rome Urbe Airport"
+  },
+  {
+    "city": "Ghedi",
+    "country": "IT",
+    "iata": null,
+    "icao": "LIPL",
+    "name": "Ghedi Air Base"
+  },
+  {
+    "city": "Rieti",
+    "country": "IT",
+    "iata": null,
+    "icao": "LIQN",
+    "name": "Rieti Airfield"
+  },
+  {
+    "city": "Viterbo",
+    "country": "IT",
+    "iata": null,
+    "icao": "LIRV",
+    "name": "Viterbo Airport"
+  },
+  {
+    "city": "Nis",
+    "country": "RS",
+    "iata": "INI",
+    "icao": "LYNI",
+    "name": "Nis Airport"
+  },
+  {
+    "city": "Kaili  (Huangping)",
+    "country": "CN",
+    "iata": "KJH",
+    "icao": null,
+    "name": "Kaili Huangping Airport"
+  },
+  {
+    "city": null,
+    "country": "TH",
+    "iata": "LOE",
+    "icao": "VTUL",
+    "name": "Loei Airport"
+  },
+  {
+    "city": "Al Kharj",
+    "country": "SA",
+    "iata": null,
+    "icao": "OEKJ",
+    "name": "Al Kharj Airport"
+  }
+]
