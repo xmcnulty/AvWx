@@ -52,4 +52,14 @@ data class Metar(
     } ?: false
 
     override fun hashCode(): Int = raw.hashCode()
+
+    val summary: MetarSummary
+        get() = MetarSummary(
+            stationIdentifier,
+            time,
+            wind,
+            temperature,
+            flightRules,
+            visibility
+        )
 }
