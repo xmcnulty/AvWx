@@ -15,8 +15,32 @@ sealed class AtmosphericPressure(
     }
 
     class Qnh(value: Int) : AtmosphericPressure(value, PressureUnits.HECTOPASCALS) {
-        override val code: String = "QNH$value"
+        override val code: String = "Q$value"
 
         override val description: String = "$value ${units.abbreviation}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (other !is AtmosphericPressure) return false
+
+        return code == other.code
+    }
+
+    companion object {
+        fun build(literal: String): AtmosphericPressure {
+            val value = when {
+                literal.startsWith("A") -> {
+                    val inches = literal.substring(1).toDouble()
+                    Altimeter(inches / 100)
+                }
+                literal.startsWith("Q") -> {
+                    val hectopascals = literal.substring(1).toInt()
+                    Qnh(hectopascals)
+                }
+                else -> throw IllegalArgumentException("Invalid atmospheric pressure literal: $literal")
+            }
+
+            return value
+        }
     }
 }

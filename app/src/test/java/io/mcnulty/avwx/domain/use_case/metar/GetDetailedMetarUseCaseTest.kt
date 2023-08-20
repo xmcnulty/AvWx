@@ -48,7 +48,8 @@ class GetDetailedMetarUseCaseTest {
             dewpoint = 9,
             flightRules = FlightRules.VFR,
             relativeHumidity = 0.78989,
-            weather = emptyList()
+            weather = emptyList(),
+            airportSummary = null
         )
 
         mockRepository = mockk()

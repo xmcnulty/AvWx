@@ -1,6 +1,6 @@
 package io.mcnulty.avwx.domain.model.metar.fields
 
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class AtmosphericPressureTest {
@@ -16,7 +16,7 @@ class AtmosphericPressureTest {
     @Test
     fun testHpa() {
         val pressure = AtmosphericPressure.Qnh(1013)
-        assertEquals("QNH1013", pressure.code)
+        assertEquals("Q1013", pressure.code)
         assertEquals("1013 hPa", pressure.description)
     }
 }

@@ -1,5 +1,6 @@
 package io.mcnulty.avwx.domain.model.metar
 
+import io.mcnulty.avwx.domain.model.airport.AirportSummary
 import io.mcnulty.avwx.domain.model.metar.fields.AtmosphericPressure
 import io.mcnulty.avwx.domain.model.metar.fields.Clouds
 import io.mcnulty.avwx.domain.model.metar.fields.FlightRules
@@ -33,6 +34,7 @@ import io.mcnulty.avwx.domain.model.metar.fields.Winds
 data class Metar(
     val raw: String,
     val stationIdentifier: String,
+    val airportSummary: AirportSummary?,
     val type: MetarType = MetarType.METAR,
     val time: MetarTime,
     val wind: Winds,

@@ -4,7 +4,6 @@ import io.mcnulty.avwx.data.remote.AvWxApi
 import io.mcnulty.avwx.data.remote.NetworkResponse
 import io.mcnulty.avwx.domain.model.metar.Metar
 import io.mcnulty.avwx.domain.repository.metar.MetarRepository
-import io.mcnulty.avwx.domain.use_case.parse.MetarParser
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
@@ -17,7 +16,7 @@ class MetarRepositoryImpl @Inject constructor(
 
     override suspend fun getMetar(fieldCode: String): NetworkResponse<Metar> = try {
         NetworkResponse(
-            body = MetarParser.toMetar(api.getMetar(fieldCode))
+            body = api.getMetar(fieldCode).toMetar()
         )
     } catch (e: HttpException) {
         when(e.code()) {

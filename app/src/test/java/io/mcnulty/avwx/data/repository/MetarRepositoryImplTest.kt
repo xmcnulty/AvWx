@@ -6,7 +6,6 @@ import io.mcnulty.avwx.data.remote.AvWxApi
 import io.mcnulty.avwx.data.remote.dto.metar.MetarDto
 import io.mcnulty.avwx.data.remote.removeQuery
 import io.mcnulty.avwx.domain.repository.metar.MetarRepository
-import io.mcnulty.avwx.domain.use_case.parse.MetarParser
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -73,9 +72,7 @@ class MetarRepositoryImplTest {
         val inputStream = InputStreamReader(javaClass.classLoader!!.getResourceAsStream("json/SampleKJFK.json"))
         val json = BufferedReader(inputStream).use { it.readText() }
 
-        val mockMetar = MetarParser.toMetar(
-            Gson().fromJson(json, MetarDto::class.java)
-        )
+        val mockMetar = Gson().fromJson(json, MetarDto::class.java).toMetar()
 
         val expectedResponse = MockResponse()
             .setResponseCode(HttpURLConnection.HTTP_OK)
