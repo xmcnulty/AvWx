@@ -11,14 +11,22 @@ class Visibility(
 
     override val description: String
         get() {
-            if (units == VisibilityUnits.METERS && value == 9999.0) {
+            if (units == VisibilityUnits.METERS && value >= 9999.0) {
                 return "Greater than 10km"
             }
 
-            if (units == VisibilityUnits.STATUTE_MILES && value == 10.0) {
+            if (units == VisibilityUnits.STATUTE_MILES && value >= 10.0) {
                 return "At least 10 statute miles"
             }
 
             return "Visibility: ${value}${units.abbreviation}"
         }
+
+    override fun equals(other: Any?): Boolean {
+        if (other == null || other !is Visibility) {
+            return false
+        }
+
+        return value == other.value && units == other.units
+    }
 }
